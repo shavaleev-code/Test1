@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "oTq7+EQvvQSvY14Ay1EFpzr3j7kQyblpNoaN/aDZpieqRuHCDjpws0iDg0Nf/+mySHcI3/PhRI1NkpoULZGY8A==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\amirs\\Desktop\\Tenzo\\Server\\Client\\Client.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\amirs\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
