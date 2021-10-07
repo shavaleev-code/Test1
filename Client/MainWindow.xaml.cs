@@ -24,10 +24,18 @@ namespace Client
     /// </summary>
     public partial class MainWindow : Window
     {
+        public User CurrentUser;
+
         public MainWindow()
         {
-            InitializeComponent();            
-            this.MainUserControl.Visibility = Visibility.Visible;           
+            InitializeComponent();
+            this.StartPageControl.Visibility = Visibility.Visible;
+            this.RegistrationControl.Visibility = Visibility.Hidden;
+            this.AuthorizationControl.Visibility = Visibility.Hidden;
+            this.MainUserControl.Visibility = Visibility.Hidden;
+            this.ErrorCredentialControl.Visibility = Visibility.Hidden;
+            this.ErrorServerControl.Visibility = Visibility.Hidden;
+            this.SuccessRegistrationControl.Visibility = Visibility.Hidden;
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

@@ -1,124 +1,182 @@
 ﻿using Client.Models;
 using Newtonsoft.Json;
 using System;
-using System.Collections.ObjectModel;
+using System.Net;
 using System.Net.Http;
+using System.Net.Mail;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Linq;
 
 namespace Client.Controls
 {
     public partial class MainUserControl : UserControl
     {
-        private ObservableCollection<Message> MessageList;
+        bool RecordToDB = false;
+        public RecordList recordList;
+        Point lastPosition;
+        int recordsAmount = 0;
+        int numberToSendMail = 50;
 
         public MainUserControl()
         {
             InitializeComponent();
-            MessageList = new ObservableCollection<Message>();
-            GetMessages();
-            
+            recordList = new RecordList();
+            recordListView.ItemsSource = recordList.Records;
+            recordsNumber.Text = recordsAmount.ToString();
         }
 
-        //Сортирует записи по времени
-        private void DateColumnHeader_OnClick(object sender, RoutedEventArgs e)
+        private void StartRecord_OnClick(object sender, RoutedEventArgs e)
         {
-            ListView.ItemsSource = MessageList.OrderBy(x => x.Time);
+            RecordToDB = true;
+            lastPosition = Mouse.GetPosition(this);             
         }
 
-        //Сортирует записи по именам
-        private void UserColumnHeader_OnClick(object sender, RoutedEventArgs e)
+        private void StopRecord_OnClick(object sender, RoutedEventArgs e)
+        {
+            RecordToDB = false;
+        }
+
+        private void CleanListView_OnClick(object sender, RoutedEventArgs e)
+        {
+            CleanListView();
+        }
+
+        private void TypeColumnHeader_OnClick(object sender, RoutedEventArgs e)
+        {
+            recordListView.ItemsSource = recordList.TypeSort();
+        }
+
+        private void TimeColumnHeader_OnClick(object sender, RoutedEventArgs e)
         {            
-            ListView.ItemsSource = MessageList.OrderBy(x => x.UserName);
+            recordListView.ItemsSource = recordList.TimeSort(); 
         }
 
-        //Отправляет сообщения на сервер и отображает в таблице
-        private void SendMessages(object sender, RoutedEventArgs e)
-        {           
-            if(Message.Text == string.Empty || UserName.Text == string.Empty)
-            {
-                return;
-            }
-
-            try
-            {
-                var clientHandler = new HttpClientHandler();
-                clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
-                var client = new HttpClient(clientHandler);
-                var requestUrl = $"https://localhost:5001/Message/Create";
-                var message = new Message { Time = DateTime.Now, Text = Message.Text, UserName = UserName.Text};
-                MessageList.Add(message);
-                ListView.ItemsSource = MessageList;
-                var response = client.PostAsync(requestUrl, new StringContent(JsonConvert.SerializeObject(message), Encoding.UTF8, "application/json"));             
-            }
-            catch (Exception ex)
-            {
-                
-            }
+        private void LeftClick(object sender, MouseButtonEventArgs e)
+        {            
+            AddRecordToTable("Левый клик", e);
         }
 
-        //Запрашивает сообщения из бд и отображает в таблице
-        private void GetMessages()
+        private void CenterClick(object sender, MouseWheelEventArgs e)
         {
+            var pos = e.GetPosition(null);
+            var record = new Record("Центральный клик", (int)pos.X, (int)pos.Y, DateTime.Now);
+            recordList.Records.Add(record);
+            recordsAmount++;
+            recordsNumber.Text = recordsAmount.ToString();
+            if (RecordToDB)
+            {
+                RecordDb(record);
+            }
+        }
+
+        private void RightClick(object sender, MouseButtonEventArgs e)
+        {
+            AddRecordToTable("Правый клик", e);
+        }
+
+        private void OnMouseMove(object sender, MouseEventArgs e)
+        {
+            var currentPosition = e.GetPosition(null);
+            if (CursorIsMove(lastPosition, currentPosition))
+            {
+                lastPosition = currentPosition;
+                var pos = e.GetPosition(null);
+                var record = new Record("Сдвиг на 10 пикселей", (int)pos.X, (int)pos.Y, DateTime.Now);
+                recordList.Records.Add(record);
+                recordsAmount++;
+                recordsNumber.Text = recordsAmount.ToString();
+                if (RecordToDB)
+                {
+                    RecordDb(record);
+                }
+            }            
+        }
+
+        private bool CursorIsMove(Point p1, Point p2)
+        {
+            var result = Math.Sqrt((p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.X - p2.X));
+            return result > 10;
+        }
+
+        //Отправляет события мыши на сервер
+        private void RecordDb(Record record)
+        {           
             try
             {
                 var clientHandler = new HttpClientHandler();
                 clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
                 var client = new HttpClient(clientHandler);
-                var requestUrl = $"https://localhost:5001/Message/Get";
-                var messages = client.GetAsync(requestUrl).Result.Content.ReadAsStringAsync().Result;
-                
-                MessageList = JsonConvert.DeserializeObject<ObservableCollection<Message>>(messages);
-                ListView.ItemsSource = MessageList;
+                var requestUrl = $"https://localhost:5001/Record/Create";
+                var A = JsonConvert.SerializeObject(record);
+                var response = client.PostAsync(requestUrl, new StringContent(JsonConvert.SerializeObject(record), Encoding.UTF8, "application/json"));             
             }
             catch (Exception e)
             {
-               
+                
             }
         }
 
-        //Отображает сообщения, которые находятся в нужных временных рамках
-        private void DateCheck_Click(object sender, RoutedEventArgs e)
+        //Отображает события мыши в таблице 
+        void AddRecordToTable(string type, MouseButtonEventArgs e)
         {
-            if((bool)DateCheck.IsChecked == false)
+            var pos = e.GetPosition(null);
+            var record = new Record(type, (int)pos.X, (int)pos.Y, DateTime.Now);
+            recordList.Records.Add(record);
+            recordsAmount++;
+            recordsNumber.Text = recordsAmount.ToString();
+            CheckRecordAmount();
+            if (RecordToDB)
             {
-                ListView.ItemsSource = MessageList;
-                return;
+                RecordDb(record);
             }
-
-            if(StartDate.Text == string.Empty || EndDate.Text == string.Empty)
-            {
-                return;
-            }
-
-            try 
-            {
-                var messages = new ObservableCollection<Message>(MessageList.Where(x => IsValidDate(x.Time, StartDate.Text, EndDate.Text)));
-                ListView.ItemsSource = messages;
-            }
-            catch(Exception ex)
-            {
-
-            }
-            
         }
 
-        //Проверка даты, находится ли она в нужных временных рамках
-        private bool IsValidDate(DateTime date, string startDate, string endDate)
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            var start = DateTime.ParseExact(startDate, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture);
-            var end = DateTime.ParseExact(endDate, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture);
-            var compareWithStartDate = DateTime.Compare(start, date);
-            var compareWithEndDate = DateTime.Compare(date, end);
-            if (compareWithStartDate < 0 && compareWithEndDate < 0)
-            {
-                return true;
-            }
+            ControlsMethods.SwitchControls(Window.GetWindow(this), "MainUserControl", "AuthorizationControl");           
+            CleanListView();
+        }
 
-            return false;
+        //Посылает сообщение с количеством записей на почту 
+        private void SendMail(string emailToSend, int recordAmount)
+        {
+            try
+            {
+                MailAddress from = new MailAddress("test@gmail.com", "Tom");
+                MailAddress to = new MailAddress(emailToSend);
+                MailMessage m = new MailMessage(from, to);
+                m.Subject = "Программа для компьютерной мыши";
+                m.Body = $"Количество сделанных вами записей равно {recordAmount}";
+                m.IsBodyHtml = false;
+                SmtpClient smtp = new SmtpClient("test@gmail.com", 587);
+                smtp.Credentials = new NetworkCredential("test@gmail.com", "testpassword");
+                smtp.EnableSsl = true;
+                smtp.Send(m);
+            }
+            catch(Exception e)
+            {
+
+            }            
+        }
+        
+        //Проверяет количество записей
+        private void CheckRecordAmount()
+        {
+            if(recordsAmount >= numberToSendMail)
+            {
+                numberToSendMail += 50;
+                SendMail(AuthentificatedUser.Email, recordsAmount);
+            }
+        }
+
+        //Очищает таблицу
+        private void CleanListView()
+        {
+            recordList.ClearRecords();
+            recordsAmount = 0;
+            recordsNumber.Text = "0";
         }
     }
 }

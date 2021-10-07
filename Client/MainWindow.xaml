@@ -7,7 +7,13 @@
         xmlns:uc="clr-namespace:Client.Controls"
         Title="Авторизация"  WindowState="Maximized" WindowStyle="None">
     <Grid>
+        <uc:StartPageControl x:Name="StartPageControl" Height="Auto" Width="Auto"/>
+        <uc:RegistrationControl x:Name="RegistrationControl" Height="Auto" Width="Auto"/>
+        <uc:AuthorizationUserControl x:Name="AuthorizationControl" Height="Auto" Width="Auto"/>
         <uc:MainUserControl x:Name="MainUserControl" Height="Auto" Width="Auto"/>
+        <uc:ErrorCredentialControl x:Name="ErrorCredentialControl" Height="Auto" Width="Auto"/>
+        <uc:ErrorServerControl x:Name="ErrorServerControl" Height="Auto" Width="Auto"/>
+        <uc:SuccessRegistrationControl x:Name="SuccessRegistrationControl" Height="Auto" Width="Auto"/>
         <Button x:Name ="CloseButton" Content="X" VerticalAlignment="Top" HorizontalAlignment="Right" Height="25" Width="60" Click="CloseButton_Click"></Button>
     </Grid>
 </Window>

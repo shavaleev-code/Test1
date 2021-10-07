@@ -54,11 +54,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\amirs\\Desktop\\Tenzo — копия\\Server\\Client\\Client.csproj",
+      "projectUniqueName": "C:\\Users\\amirs\\Desktop\\Tenzo\\Server\\Client\\Client.csproj",
       "projectName": "Client",
-      "projectPath": "C:\\Users\\amirs\\Desktop\\Tenzo — копия\\Server\\Client\\Client.csproj",
+      "projectPath": "C:\\Users\\amirs\\Desktop\\Tenzo\\Server\\Client\\Client.csproj",
       "packagesPath": "C:\\Users\\amirs\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\amirs\\Desktop\\Tenzo — копия\\Server\\Client\\obj\\",
+      "outputPath": "C:\\Users\\amirs\\Desktop\\Tenzo\\Server\\Client\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"

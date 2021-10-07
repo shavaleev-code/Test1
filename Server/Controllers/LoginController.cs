@@ -9,32 +9,35 @@ using Microsoft.Extensions.Logging;
 
 namespace Server.Controllers
 {
-    public class MessageController : Controller
+    public class LoginController : Controller
     {
+        private readonly ILogger _logger = Log.CreateLogger<LoginController>();
+
         [HttpGet]
-        public string Get()
+        public string Get(string login, string password)
         {           
             using (var db = new MyAppContext())
             {
-                var message = db.Messages;  
-                if (message == null)
+                var user = db.Users.Where(x => x.Login == login && x.Password == password).FirstOrDefault();  
+                if (user == null)
                 {
                     return string.Empty;
                 }
 
-                return JsonConvert.SerializeObject(message);
+                _logger.LogInformation("Аутентификация прошла успешно");
+                return JsonConvert.SerializeObject(user);
             }
         }
 
         [HttpPost]
-        public void Create([FromBody] Message message)
+        public void Create([FromBody] Server.Models.User user)
         {
             try
             {
                 var db = new MyAppContext();
-                if (message != null)
+                if (user != null)
                 {
-                    db.Messages.Add(message);
+                    db.Users.Add(user);
                 }
 
                 db.SaveChanges();
