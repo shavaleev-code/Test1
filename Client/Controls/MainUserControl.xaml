@@ -4,34 +4,34 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Client.Controls"
-             mc:Ignorable="d" 
-             PreviewMouseLeftButtonDown="LeftClick" PreviewMouseRightButtonDown="RightClick" PreviewMouseMove="OnMouseMove" PreviewMouseWheel="CenterClick">
+             mc:Ignorable="d" >
     <Grid>
         <Canvas Background="Lavender">
-            <Button x:Name="StartRecord" FontSize = "14" FontFamily="Verdana" Content="Начать запись " HorizontalAlignment="Left" Height="36" Margin="20,30,0,0" VerticalAlignment="Top" Width="121" Click="StartRecord_OnClick"/>
-            <Button x:Name="StopRecord" FontSize = "14" FontFamily="Verdana" Content="Остановить запись" HorizontalAlignment="Left" Height="36" Margin="145,30,0,0" VerticalAlignment="Top" Width="143" RenderTransformOrigin="1.393,0.494" Click="StopRecord_OnClick"/>
-            <Button x:Name="CleanListView" FontSize = "14" FontFamily="Verdana" Content="Очистить список" HorizontalAlignment="Left" Height="36" Margin="290,30,0,0" VerticalAlignment="Top" Width="140" RenderTransformOrigin="1.393,0.494" Click="CleanListView_OnClick"/>
-            <ListView x:Name="recordListView" FontSize = "14" FontFamily="Verdana" HorizontalAlignment="Center" Height="800" Margin="450,30,0,0" VerticalAlignment="Top" Width="800" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True">
+            <ListView x:Name="ListView" FontSize = "14" FontFamily="Verdana" HorizontalAlignment="Center" Height="800" Margin="450,30,0,0" VerticalAlignment="Top" Width="700" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="300" DisplayMemberBinding="{Binding Type}" >
-                            <GridViewColumnHeader  Content="Событие" Click="TypeColumnHeader_OnClick"/>
+                        <GridViewColumn Width="150" DisplayMemberBinding="{Binding UserName}" >
+                            <GridViewColumnHeader  Content="Имя пользователя" Click="UserColumnHeader_OnClick"/>
                         </GridViewColumn>
-                        <GridViewColumn Width="100" DisplayMemberBinding="{Binding X}">
-                            <GridViewColumnHeader Content="Абсцисса"/>
+                        <GridViewColumn Width="300" DisplayMemberBinding="{Binding Text}">
+                            <GridViewColumnHeader Content="Сообщение"/>
                         </GridViewColumn>
-                        <GridViewColumn Width="100" DisplayMemberBinding="{Binding Y}">
-                            <GridViewColumnHeader Content="Ордината"/>
-                        </GridViewColumn>
-                        <GridViewColumn Width="260" DisplayMemberBinding="{Binding Time}">
-                            <GridViewColumnHeader Content="Время события" Click="TimeColumnHeader_OnClick"/>
+                        <GridViewColumn Width="250" DisplayMemberBinding="{Binding Time}">
+                            <GridViewColumnHeader Content="Время" Click="DateColumnHeader_OnClick"/>
                         </GridViewColumn>
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Label FontSize = "14" FontFamily="Verdana" Content="Количество записей :" HorizontalAlignment="Left" Height="30" Margin="1300,30,0,0" VerticalAlignment="Center" Width="198"/>
-            <TextBlock FontSize = "14" FontFamily="Verdana" x:Name="recordsNumber" Margin="1470,35,0,0"/>
-            <Button Content="Выйти из аккаунта" FontSize = "14" FontFamily="Verdana" HorizontalAlignment="Left" Height="58" Margin="1290,770,0,0" VerticalAlignment="Top" Width="220" Click="BackButton_Click"/>
+            <TextBox x:Name="UserName" Height="29" Margin="3,30,0,0" Text="" TextWrapping="Wrap" Width="384"/>
+            <Button Content="Ввести имя пользователя" HorizontalAlignment="Left" FontSize = "14" FontFamily="Verdana" Height="37" Margin="3,70,0,0" VerticalAlignment="Top" Width="384"/>
+            <TextBox x:Name="Message" HorizontalAlignment="Left" Height="94" Margin="3,200,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="384"/>
+            <Button Content="Отправить" HorizontalAlignment="Left" Height="37" FontSize = "14" FontFamily="Verdana" Margin="3,310,0,0" VerticalAlignment="Top" Width="384" Click="SendMessages"/>
+            <TextBox x:Name="StartDate" Height="29" Margin="1200,70,0,0" Text="" TextWrapping="Wrap" Width="300"/>
+            <Button Content="Ввести начальную дату(дд.мм.гггг)" HorizontalAlignment="Left" FontSize = "14" FontFamily="Verdana" Height="37" Margin="1200,110,0,0" VerticalAlignment="Top" Width="300"/>
+            <TextBox x:Name="EndDate" Height="29" Margin="1200,170,0,0" Text="" TextWrapping="Wrap" Width="300"/>
+            <Button Content="Ввести конечную дату(дд.мм.гггг)" HorizontalAlignment="Left" FontSize = "14" FontFamily="Verdana" Height="37" Margin="1200,210,0,0" VerticalAlignment="Top" Width="300"/>
+            <CheckBox x:Name="DateCheck" Margin="1480,38,0,0" Click="DateCheck_Click"/>
+            <Label Content="Выполнить сортировку по дате" FontSize = "16" FontFamily="Verdana" HorizontalAlignment="Left" Height="30" Margin="1200,28,0,0" VerticalAlignment="Top" Width="270"/>
         </Canvas>
     </Grid>
 </UserControl>

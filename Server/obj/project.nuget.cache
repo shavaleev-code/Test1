@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "yNfC0hFYyyfYd18XsaL/28Q8A0ket+u5I2doLH0KQJv3tmK3OmxOvPzATx//qSHYGmeBY5pCl/DruJMp3EC3Aw==",
+  "dgSpecHash": "+40OycBy4szqs6btjGeqjpFrASlCbnuzIQDztcUmPyfb1k/JHnOKhZ29H5OMXeQZMxlWWAUeZEkWrYo2SUi5DQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\amirs\\Desktop\\Tenzo\\Server\\Server\\Server.csproj",
+  "projectFilePath": "C:\\Users\\amirs\\Desktop\\Tenzo — копия\\Server\\Server\\Server.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\amirs\\.nuget\\packages\\microsoft.entityframeworkcore\\5.0.10\\microsoft.entityframeworkcore.5.0.10.nupkg.sha512",
     "C:\\Users\\amirs\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\5.0.10\\microsoft.entityframeworkcore.abstractions.5.0.10.nupkg.sha512",

@@ -28,7 +28,7 @@ namespace Server
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -53,8 +53,6 @@ namespace Server
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            Log.LoggerFactory = loggerFactory;
         }
     }
 }

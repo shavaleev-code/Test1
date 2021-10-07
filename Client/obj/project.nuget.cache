@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "oTq7+EQvvQSvY14Ay1EFpzr3j7kQyblpNoaN/aDZpieqRuHCDjpws0iDg0Nf/+mySHcI3/PhRI1NkpoULZGY8A==",
+  "dgSpecHash": "f4p/mTl1V432syZ3gpoUoqYAxyHahOzmF+eBrnR0ZlDsKkq/DzookZQ09KohHKHtm/gPWwz6GUBRbuZW2VfV1w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\amirs\\Desktop\\Tenzo\\Server\\Client\\Client.csproj",
+  "projectFilePath": "C:\\Users\\amirs\\Desktop\\Tenzo — копия\\Server\\Client\\Client.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\amirs\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
   ],

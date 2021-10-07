@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\amirs\Desktop\Tenzo\Server\Client\obj\Debug\netcoreapp3.1\
+C:\Users\amirs\Desktop\Tenzo — копия\Server\Client\obj\Debug\netcoreapp3.1\
 Client
 none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1;
-C:\Users\amirs\Desktop\Tenzo\Server\Client\App.xaml
-8785411263
+C:\Users\amirs\Desktop\Tenzo — копия\Server\Client\App.xaml
+2-1827137386
 
-151624336905
+71857567571
 193205462540
-Controls\AuthorizationUserControl.xaml;Controls\ErrorCredentialControl.xaml;Controls\ErrorServerControl.xaml;Controls\MainUserControl.xaml;Controls\RegistrationControl.xaml;Controls\StartPageControl.xaml;Controls\SuccessRegistrationControl.xaml;MainWindow.xaml;
+Controls\MainUserControl.xaml;MainWindow.xaml;
 
 True
 
